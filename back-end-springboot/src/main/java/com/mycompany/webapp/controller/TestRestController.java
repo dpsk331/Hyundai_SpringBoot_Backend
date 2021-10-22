@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mycompany.webapp.dto.Board;
+import com.mycompany.webapp.dto.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,7 +96,45 @@ public class TestRestController {
 			board.setBdate(new Date());
 			list.add(board);
 		}
+		
 		return list;
 	}
 	
+	@RequestMapping("sendQueryString")
+	public Member sendQueryString(Member member) {
+		log.info("실행");
+		
+		return member;
+	}
+	
+	@RequestMapping("sendJson") // Get방식 불가능, @RequestBody가 붙어있기 때문에
+	public Member sendJson(@RequestBody Member member) {
+		log.info("실행");
+		
+		return member;
+	}
+	
+	@RequestMapping("sendMultipartFormData")
+	public Map<String, String> sendMultipartFormData(String title, MultipartFile attach) {
+		log.info("실행");
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("title", title);
+	 	map.put("attachoname", attach.getOriginalFilename());
+		map.put("attachtype", attach.getContentType());
+		
+		return map;
+	}
+	
+	@RequestMapping("sendAuth")
+	public Map<String, String> sendAuth(@RequestHeader("Authorization") String authorization) {
+		log.info("실행");
+		log.info(authorization);
+		
+		String jwt = authorization.substring(7); //"Bearer " 제거
+		Map<String, String> map = new HashMap<>();
+		map.put("jwt", jwt);
+		
+	 	return map;
+	}
 }
