@@ -18,11 +18,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ControllerExceptionHandler {
 	
 	@ExceptionHandler
-	public void handleOtherException(Exception e, 
-			HttpServletResponse response) throws IOException {
+	public void handleOtherException(Exception e, HttpServletResponse response) throws IOException {
 		log.info(e.getMessage());
 		e.printStackTrace();
 		response.sendError(500);
+	}
+	
+	@ExceptionHandler
+	public void handleBadCredentialsException(BadCredentialsException e, HttpServletResponse response) throws IOException {
+		log.info(e.getMessage());
+		response.sendError(401);
 	}
 }
 
