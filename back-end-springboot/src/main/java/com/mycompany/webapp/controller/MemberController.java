@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mycompany.webapp.dto.Member;
+import com.mycompany.webapp.security.JwtUtil;
 import com.mycompany.webapp.service.MemberService;
 import com.mycompany.webapp.service.MemberService.JoinResult;
 
@@ -72,13 +73,16 @@ public class MemberController {
 		
 		//Spring Security 사용자 인증
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(mid, mpassword);
-		Authentication authentication = authenticationManager.authenticate(token);
+		Authentication authentication = authenticationManager.authenticate(token); //아이디,비밀번호 인증 여부 확인 후 객체 생성
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		securityContext.setAuthentication(authentication);
 		
 		//응답 내용
 		Map<String, String> map = new HashMap<>();
+		String authority = authentication.getAuthorities().iterator().next().toString(); //ROLE_권한
 		map.put("result", "success");
+		map.put("mid", mid);
+		map.put("jwt", JwtUtil.createToken(mid, authority));
 		
 		return map;
 	}

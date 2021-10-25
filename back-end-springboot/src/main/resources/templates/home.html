@@ -108,8 +108,10 @@
 					<a href="javascript:login1()" class="btn btn-info btn-sm mr-2">POST /member/login1</a>
 					<a href="javascript:login2()" class="btn btn-info btn-sm">POST /member/login2</a>
 				</div>
-			</form>			
+			</form>	
+            	
 			<script th:inline="javascript">
+				// RequestParam
 				function login1() {
 					var mid = $("#loginForm [name=mid]").val();
 					var mpassword = $("#loginForm [name=mpassword]").val();
@@ -119,11 +121,12 @@
 						data: {mid, mpassword}
 					}).done((data) => {
 						console.log(data);
-						//sessionStorage.setItem("mid", data.mid);
-					    //sessionStorage.setItem("jwt", data.jwt);
+						sessionStorage.setItem("mid", data.mid);
+					    sessionStorage.setItem("jwt", data.jwt);
 					});
 				}
 				
+				//JSON
 				function login2() {
 					var mid = $("#loginForm [name=mid]").val();
 					var mpassword = $("#loginForm [name=mpassword]").val();
@@ -135,8 +138,8 @@
 						processData: false //data를 QueryString으로 표현하지 않음
 					}).done((data) => {
 						console.log(data);
-						//sessionStorage.setItem("mid", data.mid);
-					    //sessionStorage.setItem("jwt", data.jwt);
+						sessionStorage.setItem("mid", data.mid);
+					    sessionStorage.setItem("jwt", data.jwt);
 					});
 				}
 			</script>
