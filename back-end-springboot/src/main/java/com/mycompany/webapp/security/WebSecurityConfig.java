@@ -102,7 +102,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public CorsConfigurationSource corsCOnfigurationSource() {
+	public CorsConfigurationSource corsConfigurationSource() {
 		//모든 요청에서 conf에 설정한대로 확인하겠다는 의미
 		CorsConfiguration conf = new CorsConfiguration();
 		
